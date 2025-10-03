@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Advance Birthday & Diwali Wishes – Vijaya Ragavi</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:"Poppins",sans-serif;
+  background:radial-gradient(circle at top,#2b1055,#7597de);
+  overflow-x:hidden;
+  color:#fff;
+  text-align:center;
+}
+section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:opacity 1s ease}
+.hidden{opacity:0;pointer-events:none}
+button{
+  margin-top:1.5rem;padding:.8rem 2rem;border:none;border-radius:2rem;
+  background:linear-gradient(45deg,#ff8a00,#e52e71);color:#fff;
+  font-weight:bold;font-size:1rem;cursor:pointer;box-shadow:0 0 15px #e52e71;
+  transition:.3s
+}
+button:hover{transform:scale(1.05)}
+h1{font-size:2rem;margin-bottom:1rem;text-shadow:0 0 10px #ffd}
+p{max-width:600px;line-height:1.6;font-size:1rem}
+.diwas{display:flex;gap:1rem;margin-top:2rem}
+.diya{
+  width:60px;height:60px;border-radius:50%;
+  background:radial-gradient(circle at 50% 30%,#ffed9a,#ff9500);
+  box-shadow:0 0 20px 5px #ff9500;opacity:0;animation:light 1s forwards
+}
+@keyframes light{to{opacity:1;transform:scale(1.1)}}
+.fireworks{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden}
+.spark{position:absolute;width:6px;height:6px;border-radius:50%;background:#fff;animation:explode 1s ease-out forwards}
+@keyframes explode{
+  0%{transform:translate(0,0) scale(1);opacity:1}
+  100%{transform:translate(var(--x),var(--y)) scale(0);opacity:0}
+}
+.letter{
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.3);
+  border-radius:1rem;padding:2rem;margin-top:1rem;max-width:600px;
+  box-shadow:0 0 20px #fff2;
+}
+</style>
+</head>
+<body>
+
+<!-- Intro -->
+<section id="intro">
+  <h1>✨ Advance Happy Birthday & Diwali Wishes ✨</h1>
+  <h2>To My Light — Vijaya Ragavi</h2>
+  <button onclick="next('intro','diwali')">Light the Diyas</button>
+</section>
+
+<!-- Diwali lighting -->
+<section id="diwali" class="hidden">
+  <h1>Let’s light up our hearts again 💛</h1>
+  <div class="diwas">
+    <div class="diya" style="animation-delay:.2s"></div>
+    <div class="diya" style="animation-delay:.6s"></div>
+    <div class="diya" style="animation-delay:1s"></div>
+  </div>
+  <p>In this Diwali’s glow, I wish to brighten our bond once more.<br>
+     Mistakes fade, but true love glows forever like diyas in the dark.</p>
+  <button onclick="next('diwali','apology')">Open my heart</button>
+</section>
+
+<!-- Apology / Letter -->
+<section id="apology" class="hidden">
+  <div class="letter">
+    <h1>💌 My Letter to You</h1>
+    <p>Dear Vijaya Ragavi,<br><br>
+       I’m sorry for the times I hurt you. I’ve learned that love is more
+       than words — it’s care, patience, and trust.  
+       You’re my brightest light, and I wish to start again,
+       with kindness and endless respect.<br><br>
+       Yours always,<br> Yashwanth 💖
+    </p>
+  </div>
+  <button onclick="next('apology','celebration')">Celebrate Our New Beginning</button>
+</section>
+
+<!-- Celebration -->
+<section id="celebration" class="hidden">
+  <h1>🎆 Advance Happy Birthday Vijaya Ragavi 🎆</h1>
+  <p>This Diwali isn’t just a festival of lights — it’s our restart, our promise, our forever.</p>
+  <button onclick="fireworks()">Celebrate!</button>
+</section>
+
+<canvas class="fireworks" id="fw"></canvas>
+
+<script>
+function next(current,next){
+  document.getElementById(current).classList.add('hidden');
+  document.getElementById(next).classList.remove('hidden');
+}
+function fireworks(){
+  const fw=document.getElementById('fw');
+  const ctx=fw.getContext('2d');
+  fw.width=innerWidth;fw.height=innerHeight;
+  const sparks=[];
+  for(let i=0;i<200;i++){
+    const angle=Math.random()*2*Math.PI;
+    const speed=Math.random()*5+2;
+    sparks.push({
+      x:fw.width/2,y:fw.height/2,
+      vx:Math.cos(angle)*speed,
+      vy:Math.sin(angle)*speed,
+      life:Math.random()*60+30
+    });
+  }
+  let frame=0;
+  const loop=setInterval(()=>{
+    ctx.fillStyle='rgba(0,0,0,0.1)';
+    ctx.fillRect(0,0,fw.width,fw.height);
+    for(let i=0;i<sparks.length;i++){
+      const s=sparks[i];
+      ctx.fillStyle=`hsl(${(i*10+frame)%360},100%,60%)`;
+      ctx.beginPath();ctx.arc(s.x,s.y,2,0,Math.PI*2);ctx.fill();
+      s.x+=s.vx;s.y+=s.vy+0.05;s.life--;
+    }
+    frame++;
+    if(frame>120){clearInterval(loop);}
+  },16);
+}
+</script>
+</body>
+</html>
